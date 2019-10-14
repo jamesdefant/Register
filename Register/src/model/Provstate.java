@@ -3,11 +3,14 @@ package model;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.google.gson.annotations.JsonAdapter;
+
 
 /**
  * The persistent class for the provstates database table.
  * 
  */
+@JsonAdapter(ProvstateAdapter.class)
 @Entity
 @Table(name="provstates")
 @NamedQuery(name="Provstate.findAll", query="SELECT p FROM Provstate p")
@@ -49,6 +52,12 @@ public class Provstate implements Serializable {
 
 	public void setCountry(Country country) {
 		this.country = country;
+	}
+
+	@Override
+	public String toString() {
+		return "Provstate [provStateCode=" + provStateCode + ", provStateName=" + provStateName + ", country=" + country
+				+ "]";
 	}
 
 }

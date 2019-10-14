@@ -2,6 +2,9 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.google.gson.annotations.JsonAdapter;
+
 import java.util.List;
 
 
@@ -9,6 +12,7 @@ import java.util.List;
  * The persistent class for the countries database table.
  * 
  */
+@JsonAdapter(CountryAdapter.class)
 @Entity
 @Table(name="countries")
 @NamedQuery(name="Country.findAll", query="SELECT c FROM Country c")
@@ -18,7 +22,7 @@ public class Country implements Serializable {
 	@Id
 	private int countryId;
 
-	private int age;
+	private Integer age;
 
 	private String countryName;
 
@@ -37,11 +41,11 @@ public class Country implements Serializable {
 		this.countryId = countryId;
 	}
 
-	public int getAge() {
+	public Integer getAge() {
 		return this.age;
 	}
 
-	public void setAge(int age) {
+	public void setAge(Integer age) {
 		this.age = age;
 	}
 
@@ -73,6 +77,12 @@ public class Country implements Serializable {
 		provstate.setCountry(null);
 
 		return provstate;
+	}
+
+	@Override
+	public String toString() {
+		return "Country [countryId=" + countryId + ", countryName=" + countryName + ", age=" + age  + ", provstates="
+				+ provstates + "]";
 	}
 
 }

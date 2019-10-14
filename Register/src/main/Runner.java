@@ -9,27 +9,37 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import model.Country;
+import model.Provstate;
 
 
 
 public class Runner {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+
 
 		System.out.println("Runner");
 		
-		System.out.println("Country JSON: " + getCountry(2));
+
+		System.out.println("Country JSON: " + getCountry(1));
 		
-//		Gson gson = new Gson();
+		Gson gson = new Gson();
+		Country country = gson.fromJson(getCountry(1), Country.class);		
+		
+		System.out.println("Country object: " + country);
 		
 		
+		System.out.println("ProvState JSON: " + getProvstate("AK"));
+		
+		gson = new Gson();
+		Provstate provstate = gson.fromJson(getProvstate("AK"), Provstate.class);
+		
+		System.out.println("ProvState object: " + provstate);
 	}
 	
-	private static String getCountry(int countryId) {
+	public static String getCountry(int countryId) {
 		
 	    EntityManager em =  Persistence.createEntityManagerFactory("Register").createEntityManager();  
-	    //an alternative to using the query to getsingleResult we can just do a find
 	    
 	    Country country = em.find(Country.class, countryId);	
 	    
@@ -37,6 +47,19 @@ public class Runner {
 	    Type type = new TypeToken<Country>() {}.getType();
 	    
 	    return gson.toJson(country, type);
+	}
+	
+	private static String getProvstate(String provStateCode) {
+		
+	    EntityManager em =  Persistence.createEntityManagerFactory("Register").createEntityManager();  
+	    
+	    Provstate provstate = em.find(Provstate.class, provStateCode);	
+	    
+	    Gson gson = new Gson();
+	    Type type = new TypeToken<Provstate>() {}.getType();
+	    
+	    return gson.toJson(provstate, type);
+		
 	}
 
 }
